@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: metra-aai-backend
+    env: node
+    rootDir: email-triage-agent/server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: SESSION_SECRET
+        sync: false
+      - key: MOCK_MODE
+        value: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: GOOGLE_REDIRECT_URI
+        sync: false
+      - key: MODEL_PROVIDER
+        value: groq
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_CLASSIFY_MODEL
+        value: llama-3.1-8b-instant
+      - key: GROQ_DRAFT_MODEL
+        value: llama-3.3-70b-versatile
+      - key: TRIAGE_MAX_EMAILS
+        value: 10
+      - key: ASYNC_TRIAGE
+        value: true
+      - key: REDIS_REQUIRED
+        value: false
+      - key: REDIS_URL
+        sync: false

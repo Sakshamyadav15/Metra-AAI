@@ -1,0 +1,24 @@
+# VCS
+.git
+.gitignore
+
+# Node artifacts
+**/node_modules
+**/.next
+**/dist
+**/build
+
+# Local env and runtime
+**/.env
+**/.env.*
+**/*.log
+
+# Workspace files not needed for backend image
+frontend
+email-triage-agent/client
+email-triage-agent/data
+AI_Email_Triage_SRS_Architecture.docx
+AI_Email_Triage_SRS_Architecture.zip
+b_1dUgxRnChQI.zip
+docx_extract
+extracted_doc_text.txt

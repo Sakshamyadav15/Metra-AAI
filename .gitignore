@@ -1,0 +1,30 @@
+# Dependencies
+**/node_modules/
+
+# Build output
+**/.next/
+**/out/
+**/dist/
+**/build/
+
+# Environment files
+**/.env
+**/.env.*
+
+# Runtime/data
+**/.sessions/
+**/server/data/*.db
+**/server/data/*.sqlite
+
+# Local tooling
+**/.vercel/
+**/.DS_Store
+
+# Workspace archives and documents (do not push)
+*.zip
+*.docx
+extracted_doc_text.txt
+docx_extract/
+AI_Email_Triage_SRS_Architecture.zip
+AI_Email_Triage_SRS_Architecture.docx
+b_1dUgxRnChQI.zip

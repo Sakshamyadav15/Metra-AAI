@@ -1,0 +1,21 @@
+{
+  "name": "email-triage-agent",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c cyan,yellow \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client",
+    "start": "npm run start -w server",
+    "lint": "npm run lint -w client",
+    "db:migrate": "npm run db:migrate -w server",
+    "db:backup": "npm run db:backup -w server",
+    "db:pg:check": "npm run db:pg:check -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
