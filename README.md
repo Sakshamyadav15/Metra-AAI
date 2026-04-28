@@ -1,99 +1,168 @@
-# Metra AAI
+# Metra AAI - Email Inbox Automation
 
-Metra AAI is an AI-powered email triage platform that connects to Gmail, classifies incoming emails by priority, drafts replies, and tracks operational history for audit and insights.
+Metra AAI is an AI-powered inbox automation platform that connects to Gmail, intelligently classifies incoming emails, generates context-aware draft responses, and maintains comprehensive audit trails for enterprise reliability.
 
-This workspace is organized for a split deployment:
-- Frontend: Next.js application in `frontend`
-- Backend: Node.js/Express API in `email-triage-agent/server`
+**GitHub:** [Sakshamyadav15/Metra-AAI](https://github.com/Sakshamyadav15/Metra-AAI)  
+**Live:** [Hugging Face Spaces](https://huggingface.co/spaces/Sakshamyadav15/AAI) + [Vercel](https://metra-aai.vercel.app)
 
-Primary hosting target:
-- Backend on Hugging Face Space (Docker): `https://huggingface.co/spaces/Sakshamyadav15/AAI`
-- Frontend on Vercel
+---
 
-## 1. Repository Layout
+## ✨ Features
 
-- `frontend`: Vercel-deployable Next.js application
-- `email-triage-agent/server`: Render-deployable backend API
-- `Dockerfile`: Hugging Face Spaces Docker runtime for backend
-- `.dockerignore`: backend-focused Docker build context filtering
-- `render.yaml`: Render Blueprint for backend service
-- `.gitignore`: Root-level ignore rules to avoid committing archives/docs/local artifacts
+- **Gmail Integration** - OAuth 2.0 authentication with direct Gmail API access
+- **Intelligent Triage** - AI-powered email classification using Groq LLMs
+- **Smart Drafts** - Context-aware reply generation powered by advanced language models
+- **Audit Trail** - Complete operational history and activity logging
+- **Responsive UI** - Modern Next.js frontend with email selection and draft editing
+- **Scalable Backend** - Express.js API with async job processing
+- **Multi-Model Support** - Configurable LLM providers (Groq, easily extensible)
 
-Notes:
-- Legacy files and archives in the workspace are ignored by root `.gitignore`.
-- Do not commit `.env` files or local SQLite database files.
+---
 
-## 2. Local Development
+## 🛠️ Tech Stack
 
-### 2.1 Frontend
+**Frontend:**
+- Next.js 15.5.6 with App Router
+- React + TypeScript
+- Zustand for state management
+- Tailwind CSS + custom animations
+- Lucide React for icons
 
-From workspace root:
+**Backend:**
+- Node.js 20 + Express
+- Groq API (llama-3.1-8b-instant, llama-3.3-70b-versatile)
+- SQLite (dev) / PostgreSQL (production)
+- OAuth 2.0 (Google Gmail API)
+- Docker ready (Hugging Face Spaces)
 
-```powershell
-npm run dev --prefix frontend
+**Deployment:**
+- **Frontend:** Vercel
+- **Backend:** Hugging Face Spaces (Docker) or Render
+- **Database:** SQLite (local), PostgreSQL (production)
+- **Queue:** In-memory (dev) / Redis (production)
+
+---
+
+## 📁 Repository Layout
+
+```
+Metra-AAI/
+├── frontend/                           # Next.js frontend app
+│   ├── app/                           # App router and pages
+│   ├── components/                    # React components
+│   ├── lib/store/                     # Zustand store slices
+│   └── ...
+├── email-triage-agent/
+│   ├── server/                        # Express backend API
+│   │   ├── services/                 # Business logic (auth, triage, email)
+│   │   ├── routes/                   # API endpoints
+│   │   ├── middleware/               # Express middleware
+│   │   └── index.js                  # Entry point
+│   └── .env                          # Backend environment variables
+├── Dockerfile                         # Hugging Face Spaces Docker build
+├── .dockerignore                      # Docker context filtering
+├── render.yaml                        # Render Blueprint configuration
+├── .gitignore                         # Git ignore rules
+└── README.md                          # This file
 ```
 
-Default URL:
-- `http://localhost:3000`
+### Directory Details
 
-### 2.2 Backend
+- **`frontend/`**: Vercel-deployable Next.js application with email dashboard, draft editor, and OAuth integration
+- **`email-triage-agent/server/`**: Express.js API backend handling Gmail OAuth, email triage, draft generation, and session management
+- **`Dockerfile`**: Container runtime for Hugging Face Spaces (backend only)
+- **`render.yaml`**: IaC Blueprint for automated Render deployment
+- **`.gitignore`**: Excludes node_modules, .env files, archives, and local artifacts
 
-From workspace root:
+---
 
-```powershell
-npm run dev --prefix email-triage-agent/server
+## Quick Start
+
+### Prerequisites
+
+- Node.js 18+ and npm
+- Google Cloud project with Gmail API enabled
+- (For deployment) Hugging Face, Vercel, and/or Render accounts
+
+### Local Development
+
+#### 1. Clone and Install
+
+```bash
+git clone https://github.com/Sakshamyadav15/Metra-AAI.git
+cd Metra-AAI
+
+# Install frontend dependencies
+npm install --prefix frontend
+
+# Install backend dependencies
+npm install --prefix email-triage-agent/server
 ```
 
-Default URL:
-- `http://localhost:5000`
+#### 2. Set Up Environment Variables
 
-Health check:
-- `http://localhost:5000/api/health`
+**Backend** (`email-triage-agent/.env`):**Backend** (`email-triage-agent/.env`):
 
-## 3. Environment Variables
+```env
+# Server
+PORT=5000
+NODE_ENV=development
+CLIENT_ORIGIN=http://localhost:3000
 
-## 3.1 Frontend (`frontend/.env.local`)
+# Security
+SESSION_SECRET=your-secure-random-string-here
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-client-id-here
+GOOGLE_CLIENT_SECRET=your-client-secret-here
+GOOGLE_REDIRECT_URI=http://localhost:5000/api/auth/callback
+
+# AI Models
+MODEL_PROVIDER=groq
+GROQ_API_KEY=your-groq-api-key-here
+GROQ_CLASSIFY_MODEL=llama-3.1-8b-instant
+GROQ_DRAFT_MODEL=llama-3.3-70b-versatile
+
+# Email Configuration
+TRIAGE_MAX_EMAILS=10
+ASYNC_TRIAGE=true
+MOCK_MODE=false
+
+# Redis (optional for production)
+REDIS_REQUIRED=false
+REDIS_URL=
+```
+
+**Frontend** (`frontend/.env.local`):
 
 ```env
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
 ```
 
-For production (Vercel):
+#### 3. Run Locally
 
-```env
-NEXT_PUBLIC_API_BASE_URL=https://YOUR_RENDER_BACKEND_DOMAIN
+**Terminal 1 - Backend:**
+
+```bash
+npm run dev --prefix email-triage-agent/server
+# Runs on http://localhost:5000
+# Health check: http://localhost:5000/api/health
 ```
 
-## 3.2 Backend (`email-triage-agent/.env` locally, Render dashboard in production)
+**Terminal 2 - Frontend:**
 
-Required for live mode:
-
-```env
-PORT=5000
-CLIENT_ORIGIN=http://localhost:3000
-SESSION_SECRET=CHANGE_ME
-MOCK_MODE=false
-
-GOOGLE_CLIENT_ID=...
-GOOGLE_CLIENT_SECRET=...
-GOOGLE_REDIRECT_URI=http://localhost:5000/api/auth/callback
-
-MODEL_PROVIDER=groq
-GROQ_API_KEY=...
-GROQ_CLASSIFY_MODEL=llama-3.1-8b-instant
-GROQ_DRAFT_MODEL=llama-3.3-70b-versatile
-TRIAGE_MAX_EMAILS=10
-
-ASYNC_TRIAGE=true
-REDIS_REQUIRED=false
-REDIS_URL=
+```bash
+npm run dev --prefix frontend
+# Runs on http://localhost:3000
 ```
 
-For production, set:
-- `CLIENT_ORIGIN=https://YOUR_VERCEL_FRONTEND_DOMAIN`
-- `GOOGLE_REDIRECT_URI=https://YOUR_RENDER_BACKEND_DOMAIN/api/auth/callback`
+Visit `http://localhost:3000` and sign in with a Google account to test the full flow.
 
-## 4. Google OAuth and Gmail API Setup
+---
+
+## Environment Variables Reference
+
+### Frontend (`frontend/.env.local`)
 
 1. Open Google Cloud Console.
 2. Enable Gmail API for your project.
