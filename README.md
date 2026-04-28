@@ -22,7 +22,7 @@ Metra AAI is an AI-powered inbox automation platform that connects to Gmail, int
 ## 🛠️ Tech Stack
 
 **Frontend:**
-- Next.js 15.5.6 with App Router
+- Next.js 16.2.4 with App Router
 - React + TypeScript
 - Zustand for state management
 - Tailwind CSS + custom animations
