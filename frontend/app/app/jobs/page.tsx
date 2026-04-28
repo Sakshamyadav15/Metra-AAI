@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { useEffect } from "react"
 import { useJobs } from "@/lib/store"
 import { Zap, CheckCircle2, AlertCircle, Clock } from "lucide-react"

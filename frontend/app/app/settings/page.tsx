@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { Settings, Zap, Check } from "lucide-react"
 import { useEffect, useState } from "react"
 import { apiGet, apiPost } from "@/lib/api"

@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { useEffect, useMemo, useState } from "react"
 import { BarChart3, TrendingUp, Users, Mail } from "lucide-react"
 import { apiGet } from "@/lib/api"

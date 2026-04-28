@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = 'force-dynamic'
+
 import { useEffect, useState } from "react"
 import { ScrollText } from "lucide-react"
 import { apiGet } from "@/lib/api"
